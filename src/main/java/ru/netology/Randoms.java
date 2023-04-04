@@ -8,13 +8,11 @@ public class Randoms implements Iterable<Integer> {
     private int max;
     private int currentNum;
     private int previousNum;
-    private int randomCalled;
     protected Random random = new Random();
 
     public Randoms(int min, int max) {
         this.min = min;
         this.max = max;
-        randomCalled++;
         currentNum = random.nextInt(max - min + 1) + min;
     }
 
@@ -23,18 +21,14 @@ public class Randoms implements Iterable<Integer> {
         return new Iterator<Integer>() {
             @Override
             public boolean hasNext() {
-                if (randomCalled == 0) return false;
                 return true;
-
             }
 
             @Override
             public Integer next() {
-                if (currentNum >= 0) {
-                    previousNum = currentNum;
-                    currentNum = random.nextInt(max - min + 1) + min;
-                    return previousNum;
-                } else return null;
+                previousNum = currentNum;
+                currentNum = random.nextInt(max - min + 1) + min;
+                return previousNum;
             }
         };
     }
